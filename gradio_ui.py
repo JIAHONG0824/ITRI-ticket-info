@@ -60,8 +60,7 @@ def image_recognition(image, api_key):
     prompt = (
         """
         扮演文字處理專家，幫我把逐字稿整理成格式：\
-        原則2：輸出格式(但不用出現本句)：
-        $type:| 車種 $train no.:| 車次 $date:| 日期 $time:| 出發時間-抵達時間 $station :| 出發站-抵達站 $none :| none\
+        原則2：輸出格式(但不用出現本句)：$type:| 車種 $train no.:| 車次 $date:| 日期 $time:| 出發時間-抵達時間 $station:| 出發站-抵達站\
         原則3：Let's work this out in a step-by-step way to be sure we have the right answer.\
         原則4：以繁體中文來命題。逐字稿： 
         """
@@ -69,17 +68,23 @@ def image_recognition(image, api_key):
     )
     result = openai_api(prompt, api_key)
     print(result)
+    print("===")
     qtype = result.split("$type:|")[1].split("$train no.:|")[0].strip()
+    print(qtype)
     qtrain = result.split("$train no.:|")[1].split("$date:|")[0].strip()
+    print(qtrain)
     qdate = result.split("$date:|")[1].split("$time:|")[0].strip()
+    print(qdate)
     qtime = result.split("$time:|")[1].split("$station:|")[0].strip()
-    qstation = result.split("$station:|")[1].split("$none:|")[0].strip()
+    print(qtime)
+    qstation = result.split("$station:|")[1].strip()
+    print(qstation)
 
     return qtype, qtrain, qdate, qtime, qstation
 
 
 with gr.Blocks() as demo:
-    gr.Markdown("銀行存摺帳號識別")
+    gr.Markdown("交通工具")
     with gr.Tab("請依順序操作"):
         with gr.Row():
             file_input = gr.File(label="第一步：請上傳檔案")
