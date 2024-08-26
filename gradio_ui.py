@@ -75,7 +75,7 @@ def image_recognition(image, api_key):
     return qtype, qtrain, qdate, qtime
 
 
-
+# important
 with gr.Blocks() as demo:
     gr.Markdown("交通工具")
     with gr.Tab("請依順序操作"):
